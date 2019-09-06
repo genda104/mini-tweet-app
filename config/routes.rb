@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   post 'posts/:id/destroy', to: 'posts#destroy', as: :destroy_post
   get 'login', to: 'users#login_page'
   post 'login', to: 'users#login'
+  post 'logout', to: 'users#logout'
   
   resources :users
 end 
