@@ -1,5 +1,11 @@
 class PostsController < ApplicationController
+  before_action :authenticate_user
+  
   def new
+    unless @current_user
+      flash[:notice] = "ログインしてください。"
+      redirect_to login_url
+    end
     @post = Post.new
   end
   
