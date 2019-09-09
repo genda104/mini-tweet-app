@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
   before_action :authenticate_user, only: [:index, :show, :edit, :update]
+  before_action :limitation_login_user, only: [:new, :create, :login_page, :login]
+  before_action :limitation_correct_user, only: [:edit, :update]
   
   def new
     @user = User.new
@@ -71,5 +73,12 @@ class UsersController < ApplicationController
     session[:user_id] = nil
     flash[:notice] = "ログアウトしました。"
     redirect_to login_url
+  end
+  
+  def limitation_correct_user
+    unless @current_user.id == params[:id].to_i
+      flash[:notice] = "他のユーザーの編集はできません。"
+      redirect_to posts_index_url
+    end
   end
 end
